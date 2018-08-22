@@ -1,3 +1,6 @@
+Richard Anemam Da Costa RA 11049114
+Juliane Dias Cunha RA 11076415
+
 ## 1 Objetivos
 Desenvolvimento de um analisador sintático e um analisador semântico para auxiliar na interpretação da linguagem de programação Ariel, baseada nos mais básicos conceitos de C.
 
