@@ -14,24 +14,22 @@
   int vi;
  };
 
+
 %start entrada
-%token INT IF ELSE WHILE FOR VOID RETURN PAL_RES IN
 %token <vd> NUMERO
 %token <vi> VARIAVEL
-%token FIM IGUAL
+%token IF ELSE RETURN VOID WHILE FOR FROM PAL_RES FIM
 %token LT LE GT GE EQ NE SEMI
-%token LBRACE RBRACE LBRACKET RBRACKET
-%token MODULO COSSENO SENO TANGENTE LOG RAIZ EXP FATORIAL
-%left  RESTO
-%left  ADICAO SUBTRACAO
-%left  MULTIPLICACAO DIVISAO COMMA SEMI
+%token ABRE_PAR FECHA_PAR LBRACE RBRACE LBRACKET RBRACKET
+%left POTENCIACAO RAIZ
+%left ADICAO SUBTRACAO
+%left MULTIPLICACAO DIVISAO COMMA ASPASDUPLAS ASPASIMPLES
+%token RESTO MODULO COSSENO SENO TANGENTE LOG EXP FATORIAL
 %right IGUAL
-%token ABRE_PAR FECHA_PAR
 %left  NEGATIVO
-%right POTENCIACAO
 %token ERROR
 
-%type <vd> expr
+%type <vd> expr stmt
 
 
 %%
@@ -40,14 +38,13 @@ entrada   : /* vazia */
           | entrada resultado
           ;
 resultado : FIM
-          | expr FIM  { printf("Resultado: %.2f\n", $1); }
+          | stmt FIM  { printf("Resultado: %.2f\n", $1); }
           | error FIM { yyerror("ignorar..."); }
           ;
 expr      : ABRE_PAR expr FECHA_PAR          { $$ = $2; }
           | LBRACE expr RBRACE               { $$ = $2; }
           | LBRACKET expr RBRACKET           { $$ = $2; }
           | ABRE_PAR expr COMMA expr FECHA_PAR { $$ = ($2,$4); }
-          | VARIAVEL IGUAL expr              { variaveis[$1] = $3; }
           | expr ADICAO expr                 { $$ = $1 + $3; }
           | expr SUBTRACAO expr              { $$ = $1 - $3; }
           | SUBTRACAO expr %prec NEGATIVO    { $$ =-$2; }
@@ -81,6 +78,13 @@ stmt      :	WhileStmt
 	        | expr
 	        | ForStmt
 	        | if_stmt 
+          | VARIAVEL IGUAL expr { variaveis[$1] = $3; }
+          | PAL_RES
+          | PAL_RES stmt
+          | stmt LBRACE stmt RBRACE stmt
+          | stmt PAL_RES stmt
+          | PAL_RES expr LBRACE stmt RBRACE
+          |
           ;
 WhileStmt : WHILE ABRE_PAR expr FECHA_PAR LBRACE stmt RBRACE 
           ;

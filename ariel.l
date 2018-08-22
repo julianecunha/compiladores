@@ -5,6 +5,7 @@
   #include "calc02.tab.h"
   
   void abrirArquivo();
+  int palavra_reservada(char[]);
   int lineno = 0;
   
 %}
@@ -25,12 +26,10 @@ espaco     [ \t]+
 
 "if"         { return IF; }
 "else"       { return ELSE; }
-"int"        { return INT; }
 "void"       { return VOID; }
 "return"     { return RETURN; }
 "while"      { return WHILE; }
 "for"        { return FOR; }
-"in"         { return IN; }
 fat|FAT      { return FATORIAL; }
 abs|ABS      { return MODULO; }
 cos|COS      { return COSSENO; }
@@ -96,9 +95,12 @@ int palavra_reservada(char pal[])
 {
  if ((!strcmp(pal, "Ariel")) ||
      (!strcmp(pal, "def"))   ||
-     (strcmp("import",input))||
+     strcmp("import",input)  ||
      strcmp("as",input)      ||
-     strcmp("def",input))
+     strcmp("def",input)     ||
+     strcmp("class",input)   ||
+     strcmp("main()",input)    ||
+     strcmp("print",input))
   return(1);
  else
   return(0);
