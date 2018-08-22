@@ -1,0 +1,25 @@
+Ariel
+
+class Math {
+
+  main() {
+    a = sqrt(4)
+    print(a)
+    
+    b = fat(4)
+    print(b)
+    
+    c = abs(-89)
+    print(a)
+    
+    d = cos(1)
+    print(d)
+    
+    e = sin(1)
+    print(e)
+    
+    f = tan(1)
+    print(f)
+  }
+
+}
